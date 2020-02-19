@@ -353,3 +353,4 @@ bin
 obj
 .vscode
 appsettings.json
+reactivities.db
