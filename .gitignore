@@ -354,3 +354,4 @@ obj
 .vscode
 appsettings.json
 reactivities.db
+*.db
