@@ -355,3 +355,4 @@ obj
 appsettings.json
 reactivities.db
 *.db
+/Course-Assets
