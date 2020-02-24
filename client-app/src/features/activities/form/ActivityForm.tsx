@@ -1,20 +1,22 @@
 import React, { useState, FormEvent } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/layout/models/activity";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from "uuid";
 
 interface IProps {
   setEditMode: (editMode: boolean) => void;
   activity: IActivity | null;
   createActivity: (activity: IActivity) => void;
   editActivity: (activity: IActivity) => void;
+  submitting: boolean;
 }
 
 export const ActivityForm: React.FC<IProps> = ({
   setEditMode,
   activity: initialFormState,
   createActivity,
-  editActivity
+  editActivity,
+  submitting
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -46,9 +48,7 @@ export const ActivityForm: React.FC<IProps> = ({
     }
   };
 
-  const handleInputChange = (
-    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.currentTarget;
     setActivity({ ...activity, [name]: value });
   };
@@ -56,12 +56,7 @@ export const ActivityForm: React.FC<IProps> = ({
   return (
     <Segment clearing>
       <Form onSubmit={handleSubmit}>
-        <Form.Input
-          name="title"
-          onChange={handleInputChange}
-          value={activity.title}
-          placeholder="Title"
-        />
+        <Form.Input name="title" onChange={handleInputChange} value={activity.title} placeholder="Title" />
         <Form.TextArea
           name="description"
           onChange={handleInputChange}
@@ -69,12 +64,7 @@ export const ActivityForm: React.FC<IProps> = ({
           rows={2}
           placeholder="Description"
         />
-        <Form.Input
-          name="category"
-          onChange={handleInputChange}
-          value={activity.category}
-          placeholder="Category"
-        />
+        <Form.Input name="category" onChange={handleInputChange} value={activity.category} placeholder="Category" />
         <Form.Input
           name="date"
           onChange={handleInputChange}
@@ -82,25 +72,10 @@ export const ActivityForm: React.FC<IProps> = ({
           placeholder="Date"
           type="datetime-local"
         />
-        <Form.Input
-          name="city"
-          onChange={handleInputChange}
-          value={activity.city}
-          placeholder="City"
-        />
-        <Form.Input
-          name="venue"
-          onChange={handleInputChange}
-          value={activity.venue}
-          placeholder="Venue"
-        />
-        <Button floated="right" positive type="submit" content="Submit" />
-        <Button
-          onClick={() => setEditMode(false)}
-          floated="right"
-          type="button"
-          content="Cancel"
-        />
+        <Form.Input name="city" onChange={handleInputChange} value={activity.city} placeholder="City" />
+        <Form.Input name="venue" onChange={handleInputChange} value={activity.venue} placeholder="Venue" />
+        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
+        <Button onClick={() => setEditMode(false)} floated="right" type="button" content="Cancel" />
       </Form>
     </Segment>
   );
